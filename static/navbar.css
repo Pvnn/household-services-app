@@ -1,0 +1,10 @@
+#logo{
+  object-fit: contain ;
+  margin-right: 10px;
+  filter: brightness(1.1) contrast(1.1) saturate(1.2);
+  filter: contrast(100%);
+
+}
+.header-span{
+  margin: 0px 5px 0px 5px;
+}

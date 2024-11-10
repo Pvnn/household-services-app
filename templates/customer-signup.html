@@ -12,22 +12,30 @@
     <div id="canvas">
       <div id="form-body">
         <h2>Customer SignUp</h2>
-        <form class="row g-3">
+        <form class="row g-3" action="/register" method="post">  
           <div class="col-md-12">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="u_name">
+            <input type="text" class="form-control" id="name" name="name">
           </div>
           <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputEmail4">
+            <input type="email" class="form-control" id="inputEmail4" name="email">
+          </div>
+          <div class="col-md-6">
+            <label for="phone" class="form-label">Phone number </label>
+            <input type="text" class="form-control" name="phone">
+          </div>
+          <div class="col-md-6">
+            <label for="name" class="form-label">Username</label>
+            <input type="text" class="form-control" id="name" name="u_name">
           </div>
           <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword4">
+            <input type="password" class="form-control" id="inputPassword4" name="pwd">
           </div>
           <div class="col-md-12">
             <label for="address" class="form-label">Address</label>
-            <textarea class="form-control" id="address" rows="3" name="description"></textarea>
+            <textarea class="form-control" id="address" rows="3" name="address"></textarea>
           </div>
           <div class="col-md-12">
             <label for="pin" class="form-label">Pin code</label>

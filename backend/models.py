@@ -47,6 +47,8 @@ class Customers(db.Model):
     
     customer_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'), unique=True, nullable=False)
+    name = db.Column(db.String)
+    email = db.Column(db.String)
     address = db.Column(db.String)
     pin_code = db.Column(db.String)
     phone = db.Column(db.String)

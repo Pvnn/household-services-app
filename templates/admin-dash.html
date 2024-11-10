@@ -29,7 +29,7 @@
       <div style="display: flex; width: 180px; align-items: end;">
         <a class="nav-link" href="#">Admin</a>
         <span style="margin: 0px 25px 0px 0px;"></span>
-        <a class="nav-link text-danger" href="#">Logout</a>
+        <a class="nav-link text-danger" href="/userlogin">Logout</a>
       </div>
     </div>
   </nav>
@@ -52,19 +52,22 @@
               <th scope="row">1</th>
               <td>Cleaning</td>
               <td>5000</td>
-              <td style="display: flex;"><a href="#" class="nav-link text-primary accept-btn" >Edit</a> / <a href="#" class="nav-link text-danger reject-btn">Delete</a> </td>
+              <td class="d-flex"><a href="#" class="nav-link text-primary accept-btn" >Edit</a><a href="#" class="nav-link text-danger reject-btn">Delete</a> </td>
             </tr>
             <tr>
               <th scope="row">2</th>
               <td>Electrician</td>
               <td>2000</td>
-              <td style="display: flex;"><a href="#" class="nav-link text-primary accept-btn">Edit </a> / <a href="#" class="nav-link text-danger reject-btn"> Delete</a></td>
+              <td class="d-flex"><a href="#" class="nav-link text-primary accept-btn" >Edit</a><a href="#" class="nav-link text-danger reject-btn">Delete</a> </td>
             </tr>
           </tbody>
         </table>
+        <div class="text text-end">
+          <a href="#"><button class="btn btn-outline-success">New Service +</button></a>
+        </div>
       </div>
 
-      <br>
+      
       <h2 class="headings">Professionals</h2><br>
       <div>
         <table class="table">
@@ -83,14 +86,14 @@
               <td>Bharti</td>
               <td>5 years</td>
               <td>Cleaning</td>
-              <td style="display: flex;"><a href="#" class="nav-link text-success accept-btn">Approve</a> / <a href="#" class="nav-link text-warning reject-btn"> Reject <span style=" color: white;">x</span> </a> / <a href="#" class="nav-link text-danger reject-btn"> Delete</a></td>
+              <td class="d-flex"><a href="#" class="nav-link text-success accept-btn">Approve</a> <a href="#" class="nav-link text-warning reject-btn"> Reject</a><a href="#" class="nav-link text-danger reject-btn">Delete</a></td>
             </tr>
             <tr>
               <th scope="row">2</th>
               <td>Bevin</td>
               <td>15 years</td>
               <td>Plumbing</td>
-              <td style="display: flex;"><a href="#" class="nav-link text-success accept-btn">Approve</a> / <a href="#" class="nav-link text-warning reject-btn"> Reject<span style=" color: white;">x</span></a> / <a href="#" class="nav-link text-danger reject-btn"> Delete</a></td>
+              <td class="d-flex"><a href="#" class="nav-link text-success accept-btn">Approve</a> <a href="#" class="nav-link text-warning reject-btn"> Reject</a><a href="#" class="nav-link text-danger reject-btn">Delete</a></td>
             </tr>
           </tbody>
         </table>
@@ -103,23 +106,29 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Service Name</th>
-              <th scope="col">Base Price</th>
-              <th scope="col">Action</th>
+              <th scope="col">Assigned Professional (if any)</th>
+              <th scope="col">Requested date</th>
+              <th scope="col">Status</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th scope="row">1</th>
-              <td>Cleaning</td>
-              <td>5000</td>
-              <td style="display: flex;"><a href="#" class="nav-link text-primary accept-btn" >Edit</a> / <a href="#" class="nav-link text-danger reject-btn">Delete</a> </td>
+              <td>-</td>
+              <td>13/11/2024</td>
+              <td class="text text-primary">Requested</td>
             </tr>
             <tr>
               <th scope="row">2</th>
-              <td>Electrician</td>
-              <td>2000</td>
-              <td style="display: flex;"><a href="#" class="nav-link text-primary accept-btn">Edit </a> / <a href="#" class="nav-link text-danger reject-btn"> Delete</a></td>
+              <td>Bharti</td>
+              <td>10/11/2024</td>
+              <td class="text text-success">Accepted</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Yash</td>
+              <td>01/11/2024</td>
+              <td class="text text-warning">Closed</td>
             </tr>
           </tbody>
         </table>

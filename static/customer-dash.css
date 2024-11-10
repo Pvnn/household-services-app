@@ -15,6 +15,10 @@
   margin-top: 10px;
 }
 
+td a {
+  margin: 4px;
+}
+
 .card {
   height: 350px; 
   padding: 10px;  

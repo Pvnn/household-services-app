@@ -96,3 +96,19 @@ def registerpro():
     return redirect('/userlogin')
   services = Services.query.all()
   return render_template('prof-signup.html', services = services)
+
+@app.route('/service/create', methods =['GET', 'POST'])
+def create_service():
+  if request.method=='POST':
+    name = request.form.get('name')
+    category = request.form.get('category')
+    description = request.form.get('description')
+    price = request.form.get('price')
+    time = request.form.get('time')
+    new_service = Services(name = name, description = description, base_price = price, time_required = time, category = category)
+    db.session.add(new_service)
+    db.session.commit()
+    return redirect('/admin')
+  
+  category_list = [category[0] for category in db.session.query(Services.category).distinct().all()]
+  return render_template('service-create.html', category_list = category_list)

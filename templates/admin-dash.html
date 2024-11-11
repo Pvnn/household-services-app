@@ -72,35 +72,44 @@
 
       
       <h2 class="headings">Professionals</h2><br>
-      <div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Experience</th>
-              <th scope="col">Service Name</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Bharti</td>
-              <td>5 years</td>
-              <td>Cleaning</td>
-              <td class="d-flex"><a href="#" class="nav-link text-success accept-btn">Approve</a> <a href="#" class="nav-link text-warning reject-btn"> Reject</a><a href="#" class="nav-link text-danger reject-btn">Delete</a></td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Bevin</td>
-              <td>15 years</td>
-              <td>Plumbing</td>
-              <td class="d-flex"><a href="#" class="nav-link text-success accept-btn">Approve</a> <a href="#" class="nav-link text-warning reject-btn"> Reject</a><a href="#" class="nav-link text-danger reject-btn">Delete</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {% if professionals|length ==0 %}
+        <div class="text text-center mt-3 mb-3">
+          <h5 class="headings">No Registered Professionals</h5>
+        </div>
+      {% else %}
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Experience</th>
+                <th scope="col">Service Name</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for pro in professionals %}
+                <tr>
+                  <th scope="row">{{loop.index}}</th>
+                  <td>{{pro.name}}</td>
+                  <td>{{pro.experience_years}} years</td>
+                  {% for service in services %}
+                    {% if service.service_id == pro.service_id %}
+                      <td>{{ service.name }}</td>
+                    {% endif %}
+                  {% endfor %}
+                  {% if pro.profile_verified==0 %}
+                    <td class="d-flex"><a href="#" class="nav-link text-success accept-btn">Approve</a> <a href="#" class="nav-link text-warning reject-btn"> Reject</a><a href="#" class="nav-link text-danger reject-btn">Delete</a></td>
+                  {% else %}
+                    <td class="d-flex"><a href="#" class="nav-link text-danger reject-btn">Block</a></td>
+                  {% endif %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
       <br>
 
       <h2 class="headings">Service Requests</h2><br>

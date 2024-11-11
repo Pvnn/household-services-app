@@ -45,7 +45,7 @@
               <div class="card-body">
                 <h5 class="card-title">Cleaning Services</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Book Now</a>
+                <a href="/user/{{user.user_id}}/service/category/cleaning" class="btn btn-primary">Book Service</a>
               </div>
             </div>
           </div>
@@ -88,27 +88,22 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Service 1</td>
-              <td>Abha</td>
-              <td>XXXXXXXXXX</td>
-              <td><button class="btn btn-primary">Close it?</button></td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Service 2</td>
-              <td>Abhay</td>
-              <td>XXXXXXXXXX</td>
-              <td>Closed</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Service 3</td>
-              <td>Akshay</td>
-              <td>XXXXXXXXXX</td>
-              <td>Requested</td>
-            </tr>
+            {% for request in service_requests %}
+              <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ request.service.name }}</td>
+                {% if request.status == 'accepted' %}
+                  <td>{{ request.professional.name }}</td>
+                  <td>{{ request.professional.phone }}</td>
+                  <td><a class="btn btn-primary">Close it?</a></td>
+                {% else %}
+                  <td>To be assigned</td>
+                  <td> - </td>
+                  <td><a class="btn btn-danger">Cancel</a></td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+
           </tbody>
         </table>
     <div>

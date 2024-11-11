@@ -1,6 +1,7 @@
 from flask import Flask,redirect,request, render_template
 from flask import current_app as app
 from .models import *
+import datetime
 
 @app.route('/')
 def home():
@@ -28,16 +29,40 @@ def userlogin():
 def customer_dash(user_id):
   user = Users.query.filter_by(user_id = user_id).first()
   customer = Customers.query.filter_by(user_id = user_id).first()
-  return render_template('customer-dash.html', customer = customer, user = user)
+  return render_template('customer-dash.html', customer = customer, user = user, service_requests = customer.service_requests)
 
 @app.route('/user/summary')
 def view_summary():
   return render_template('customer-summary.html')
 
+@app.route('/user/<int:user_id>/service/category/<string:category>')
+def display_category(user_id, category):
+  user = Users.query.filter_by(user_id = user_id).first()
+  customer = Customers.query.filter_by(user_id = user_id).first()
+  services = Services.query.filter_by(category = category).all()
+  return render_template('customer-dash-category.html', user = user, customer = customer, services = services, service_requests = customer.service_requests)
+
+@app.route('/user/<int:user_id>/service/book/<int:service_id>', methods= ['GET', 'POST'])
+def book_service(user_id, service_id):
+  user = Users.query.filter_by(user_id = user_id).first()
+  customer = Customers.query.filter_by(user_id = user_id).first()
+  service = Services.query.filter_by(service_id = service_id).first()
+  if request.method== 'POST' :
+    date = request.form.get('date')
+    add_requests = request.form.get('add_requests')
+    ex_request = ServiceRequests.query.filter_by(service_id = service_id, customer_id = customer.customer_id, service_status = 'requested', additional_requests = add_requests, requested_service_date = datetime.datetime.strptime(date, "%Y-%m-%d").date()).first()
+    if not ex_request:
+      new_servicerequest = ServiceRequests(service_id = service_id, customer_id = customer.customer_id, service_status = 'requested', additional_requests = add_requests, requested_service_date = datetime.datetime.strptime(date, "%Y-%m-%d").date())
+      db.session.add(new_servicerequest)
+      db.session.commit()
+    return redirect(f"/user/customer/{user.user_id}")
+  return render_template('customer-book-service.html', user = user, customer = customer, service = service)
+
 @app.route('/admin')
 def admin_dash():
   services = Services.query.all()
-  return render_template('admin-dash.html', services = services)
+  professionals = ServiceProfessionals.query.all()
+  return render_template('admin-dash.html', services = services, professionals = professionals)
 
 @app.route('/user/prof/<int:user_id>')
 def prof_dash(user_id):
@@ -112,3 +137,4 @@ def create_service():
   
   category_list = [category[0] for category in db.session.query(Services.category).distinct().all()]
   return render_template('service-create.html', category_list = category_list)
+

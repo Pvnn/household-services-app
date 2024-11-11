@@ -1,5 +1,5 @@
 from .database import db
-from datetime import datetime, timezone
+from datetime import date
 
 class Users(db.Model):
   __tablename__ = 'Users'
@@ -63,8 +63,9 @@ class ServiceRequests(db.Model):
     service_id = db.Column(db.Integer, db.ForeignKey('Services.service_id'), nullable=False)
     customer_id = db.Column(db.Integer, db.ForeignKey('Customers.customer_id'), nullable=False)
     professional_id = db.Column(db.Integer, db.ForeignKey('ServiceProfessionals.professional_id'))
-    requested_service_date = db.Column(db.DateTime, nullable=False)
-    date_of_request = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-    date_of_completion = db.Column(db.DateTime)
+    requested_service_date = db.Column(db.Date, nullable=False)
+    date_of_request = db.Column(db.Date, default=date.today)
+    date_of_completion = db.Column(db.Date)
     service_status = db.Column(db.String, default='requested')
+    additional_requests = db.Column(db.String)
     remarks = db.Column(db.String)

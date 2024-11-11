@@ -5,40 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="../static/prof-signup.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='prof-signup.css') }}">
 </head>
 <body>
   <div id="main">
     <div id="canvas">
       <div id="form-body">
         <h2>Service Professional SignUp</h2>
-        <form class="row g-3">
+        <form class="row g-3" action="/register/pro" method="post">
+          <div class="col-md-8">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name">
+          </div>
+          <div class="col-md-4">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="text" class="form-control" id="phone" name="phone">
+          </div>
           <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputEmail4">
+            <label for="u_name" class="form-label">Username</label>
+            <input type="text" class="form-control" id="u_name" name="u_name">
           </div>
           <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword4">
-          </div>
-          <div class="col-md-12">
-            <label for="name" class="form-label">Full Name</label>
-            <input type="text" class="form-control" id="name">
+            <input type="password" class="form-control" id="inputPassword4" name="pwd">
           </div>
           <div class="col-md-8">
             <label for="service" class="form-label">Service Type</label>
-            <select id="service" class="form-select">
+            <select id="service" class="form-select" name="service">
               <option selected>Choose...</option>
-              <option>Cleaning</option>
-              <option>Babysitting</option>
-              <option>Cooking</option>
-              <option>Plumbing</option>
-              <option>Electrical</option>
+              {% for service in services %}
+                <option>{{ service.name }}</option>
+              {% endfor %}
             </select>
           </div>
           <div class="col-md-4">
             <label for="exp" class="form-label">Experience (in yrs)</label>
-            <input type="text" class="form-control" id="exp">
+            <input type="text" class="form-control" id="exp" name="exp">
           </div>
           <div class="col-md-12">
             Attach documents (Single pdf)
@@ -53,11 +55,11 @@
           
           <div class="col-md-12">
             <label for="address" class="form-label">Address</label>
-            <textarea class="form-control" id="address" rows="3" name="description"></textarea>
+            <textarea class="form-control" id="address" rows="3" name="address"></textarea>
           </div>
           <div class="col-md-12">
             <label for="pin" class="form-label">Pincode</label>
-            <input type="text" class="form-control" id="exp">
+            <input type="text" class="form-control" id="pin" name="pin">
           </div>
           <div class="col-12">
             <button type="submit" class="btn btn-primary">Sign in</button>

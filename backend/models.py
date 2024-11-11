@@ -36,6 +36,7 @@ class ServiceProfessionals(db.Model):
     service_id = db.Column(db.Integer, db.ForeignKey('Services.service_id'), nullable=False)
     experience_years = db.Column(db.Integer)
     profile_verified = db.Column(db.Boolean, default=False)
+    name = db.Column(db.String, nullable = False)
     phone = db.Column(db.String)
     address = db.Column(db.String)
     pin_code = db.Column(db.String)

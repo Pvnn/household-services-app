@@ -113,6 +113,11 @@
       <br>
 
       <h2 class="headings">Service Requests</h2><br>
+      {% if service_requests|length ==0 %}
+        <div class="text text-center mt-3 mb-3">
+          <h5 class="headings">No Requests have been made</h5>
+        </div>
+      {% else %}
       <div>
         <table class="table">
           <thead>
@@ -120,31 +125,24 @@
               <th scope="col">ID</th>
               <th scope="col">Assigned Professional (if any)</th>
               <th scope="col">Requested date</th>
+              <th scope="col">Service date</th>
               <th scope="col">Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>-</td>
-              <td>13/11/2024</td>
-              <td class="text text-primary">Requested</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Bharti</td>
-              <td>10/11/2024</td>
-              <td class="text text-success">Accepted</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Yash</td>
-              <td>01/11/2024</td>
-              <td class="text text-warning">Closed</td>
-            </tr>
+            {% for request in service_requests %}
+              <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ request.professional.name }}</td>
+                <td>{{ request.date_of_request }}</td>
+                <td>{{ request.requested_service_date }}</td>
+                <td class="text text-primary">{{ request.service_status | title }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
+      {% endif %}
 
     <div>
   </div>

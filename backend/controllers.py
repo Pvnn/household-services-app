@@ -62,7 +62,8 @@ def book_service(user_id, service_id):
 def admin_dash():
   services = Services.query.all()
   professionals = ServiceProfessionals.query.all()
-  return render_template('admin-dash.html', services = services, professionals = professionals)
+  service_requests = ServiceRequests.query.all()
+  return render_template('admin-dash.html', services = services, professionals = professionals, service_requests = service_requests)
 
 @app.route('/user/prof/<int:user_id>')
 def prof_dash(user_id):

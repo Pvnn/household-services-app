@@ -14,6 +14,9 @@ def create_app():
 app = create_app()
 
 from backend.controllers import *
+from backend.customerController import *
+from backend.adminController import *
+from backend.professionalController import *
 
 if __name__ == "__main__":
   app.run()

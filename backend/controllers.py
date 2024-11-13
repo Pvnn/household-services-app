@@ -49,9 +49,13 @@ def book_service(user_id, service_id):
   service = Services.query.filter_by(service_id = service_id).first()
   if request.method== 'POST' :
     date = request.form.get('date')
+    if len(date)<5:
+      date = datetime.date.today()
+      date = date.strftime("%Y-%m-%d")
     add_requests = request.form.get('add_requests')
     ex_request = ServiceRequests.query.filter_by(service_id = service_id, customer_id = customer.customer_id, service_status = 'requested', additional_requests = add_requests, requested_service_date = datetime.datetime.strptime(date, "%Y-%m-%d").date()).first()
     if not ex_request:
+      print(date)
       new_servicerequest = ServiceRequests(service_id = service_id, customer_id = customer.customer_id, service_status = 'requested', additional_requests = add_requests, requested_service_date = datetime.datetime.strptime(date, "%Y-%m-%d").date())
       db.session.add(new_servicerequest)
       db.session.commit()

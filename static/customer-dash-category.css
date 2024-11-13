@@ -16,6 +16,10 @@
   margin-top: 10px;
 }
 
+table a {
+  text-decoration: none;
+}
+
 td a {
   margin: 4px;
 }

@@ -20,6 +20,10 @@ td a {
   margin: 4px;
 }
 
+table a {
+  text-decoration: none;
+}
+
 .card {
   height: 350px; 
   padding: 10px;  

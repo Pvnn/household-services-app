@@ -55,10 +55,10 @@
             <tbody>
               {% for service in services %}
                 <tr>
-                  <th scope="row">{{ loop.index }}</th>
+                  <th scope="row"> <a href="" class="text"> {{ loop.index }}</a></th>
                   <td>{{service.name}}</td>
                   <td>{{ service.base_price }}</td>
-                  <td class="d-flex"><a href="#" class="nav-link text-primary accept-btn" >Edit</a><a href="#" class="nav-link text-danger reject-btn">Delete</a> </td>
+                  <td class="d-flex"><a href="/admin/service/edit/{{ service.service_id }}" class="nav-link text-primary accept-btn" >Edit</a><a href="#" class="nav-link text-danger reject-btn">Delete</a> </td>
                 </tr>
               {% endfor %}
             </tbody>
@@ -91,7 +91,7 @@
             <tbody>
               {% for pro in professionals %}
                 <tr>
-                  <th scope="row">{{loop.index}}</th>
+                  <th scope="row"> <a href="/admin/view/pro/{{ pro.professional_id }}" class="text text-primary"> {{ loop.index }}</a></th>
                   <td>{{pro.name}}</td>
                   <td>{{pro.experience_years}} years</td>
                   {% for service in services %}

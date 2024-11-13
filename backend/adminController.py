@@ -24,3 +24,30 @@ def create_service():
   
   category_list = [category[0] for category in db.session.query(Services.category).distinct().all()]
   return render_template('service-create.html', category_list = category_list)
+
+@app.route('/admin/view/pro/<int:pro_id>', methods =['GET'])
+def view_pro(pro_id):
+  pro = ServiceProfessionals.query.get(pro_id)
+  return render_template('admin-view-pro.html', pro = pro)
+
+@app.route('/admin/service/edit/<int:service_id>', methods =['GET', 'POST'])
+def edit_service(service_id):
+  service = Services.query.get(service_id)
+  category_list = [category[0] for category in db.session.query(Services.category).distinct().all()]
+  if request.method=='POST':
+    print(request.form)
+    name = request.form.get('name')
+    category = request.form.get('category')
+    description = request.form.get('description')
+    price = request.form.get('price')
+    time = request.form.get('time')
+    service.name = name
+    service.category = category
+    service.description = description
+    service.base_price = float(price)
+    service.time_required = int(time)
+    db.session.flush()
+    db.session.commit()
+    return redirect('/admin')
+
+  return render_template('service-edit.html', service = service, category_list = category_list)

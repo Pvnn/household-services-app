@@ -1,7 +1,6 @@
 from flask import Flask,redirect,request, render_template
 from flask import current_app as app
 from .models import *
-import datetime
 
 @app.route('/')
 def home():

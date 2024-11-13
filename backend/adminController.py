@@ -51,3 +51,8 @@ def edit_service(service_id):
     return redirect('/admin')
 
   return render_template('service-edit.html', service = service, category_list = category_list)
+
+@app.route('/admin/view/service/<int:request_id>', methods =['GET'])
+def view_request(request_id):
+  request = ServiceRequests.query.get(request_id)
+  return render_template('admin-view-request.html', request= request)

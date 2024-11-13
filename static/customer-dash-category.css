@@ -2,6 +2,7 @@
   margin: 0px;
 }
 #main, #canvas{
+  margin-top: 90px;
   border: 2px none black;
 }
 #canvas{

@@ -12,3 +12,13 @@
 .text-end{
   margin-right: 10px;
 }
+
+.navbar{
+  position: fixed;
+  background-color: white;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: max-content;
+  z-index: 1000;
+}

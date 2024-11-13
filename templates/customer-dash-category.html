@@ -16,7 +16,7 @@
         <span style="font-size: 1.5rem;">Chorely</span>
       </a>
       <div style="display: flex;">
-        <a class="nav-link active" aria-current="page" href="/user">Home</a>
+        <a class="nav-link active" aria-current="page" href="/user/customer/{{ user.user_id }}">Home</a>
         <span class="header-span"></span>
         | 
         <span class="header-span"></span>
@@ -60,42 +60,43 @@
         </div>
       </div>
       <h2 class="headings">Service History</h2><br>
-      <div>
-        <table class="table" style="margin-bottom: 50px;">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Service Name</th>
-              <th scope="col">Professional Name</th>
-              <th scope="col">Phone No.</th>
-              <th scope="col">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Service 1</td>
-              <td>Abha</td>
-              <td>XXXXXXXXXX</td>
-              <td><button class="btn btn-primary">Close it?</button></td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Service 2</td>
-              <td>Abhay</td>
-              <td>XXXXXXXXXX</td>
-              <td>Closed</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Service 3</td>
-              <td>Akshay</td>
-              <td>XXXXXXXXXX</td>
-              <td>Requested</td>
-            </tr>
-          </tbody>
-        </table>
-    <div>
+      {% if service_requests | length ==0 %}
+        <div class="text text-center">
+          <h5 class="headings">There are no services to display</h5>
+        </div>
+      {% else %}
+        <div>
+          <table class="table" style="margin-bottom: 50px;">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Service Name</th>
+                <th scope="col">Professional Name</th>
+                <th scope="col">Phone No.</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for request in service_requests %}
+                <tr>
+                  <th scope="row">{{ loop.index }}</th>
+                  <td>{{ request.service.name }}</td>
+                  {% if request.status == 'accepted' %}
+                    <td>{{ request.professional.name }}</td>
+                    <td>{{ request.professional.phone }}</td>
+                    <td><a class="btn btn-primary">Close it?</a></td>
+                  {% else %}
+                    <td>To be assigned</td>
+                    <td> - </td>
+                    <td><a class="btn btn-danger">Cancel</a></td>
+                  {% endif %}
+                </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+        <div>
+      {% endif %}
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-mQ93lEdRIU7WUpPusYS5PQu2Wl0lNx9exjJtTzm7Nq6pZl+rcSkkYVEQ7OIslWAv" crossorigin="anonymous"></script>
 </body>

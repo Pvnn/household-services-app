@@ -20,7 +20,7 @@
         <span class="header-span"></span>
         | 
         <span class="header-span"></span>
-        <a class="nav-link" href="#">Search</a>
+        <a class="nav-link" href="/user/customer/{{ user.user_id }}">Search</a>
         <span class="header-span"></span>
         |
         <span class="header-span"></span>
@@ -76,37 +76,43 @@
       </div>
       
       <h2 class="headings">Service History</h2><br>
-      <div>
-        <table class="table" style="margin-bottom: 50px;">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Service Name</th>
-              <th scope="col">Professional Name</th>
-              <th scope="col">Phone No.</th>
-              <th scope="col">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for request in service_requests %}
+      {% if service_requests | length ==0 %}
+        <div class="text text-center">
+          <h5 class="headings">There are no services to display</h5>
+        </div>
+      {% else %}
+        <div>
+          <table class="table" style="margin-bottom: 50px;">
+            <thead>
               <tr>
-                <th scope="row">{{ loop.index }}</th>
-                <td>{{ request.service.name }}</td>
-                {% if request.status == 'accepted' %}
-                  <td>{{ request.professional.name }}</td>
-                  <td>{{ request.professional.phone }}</td>
-                  <td><a class="btn btn-primary">Close it?</a></td>
-                {% else %}
-                  <td>To be assigned</td>
-                  <td> - </td>
-                  <td><a class="btn btn-danger">Cancel</a></td>
-                {% endif %}
+                <th scope="col">ID</th>
+                <th scope="col">Service Name</th>
+                <th scope="col">Professional Name</th>
+                <th scope="col">Phone No.</th>
+                <th scope="col">Status</th>
               </tr>
-            {% endfor %}
+            </thead>
+            <tbody>
+              {% for request in service_requests %}
+                <tr>
+                  <th scope="row">{{ loop.index }}</th>
+                  <td>{{ request.service.name }}</td>
+                  {% if request.status == 'accepted' %}
+                    <td>{{ request.professional.name }}</td>
+                    <td>{{ request.professional.phone }}</td>
+                    <td><a class="btn btn-primary">Close it?</a></td>
+                  {% else %}
+                    <td>To be assigned</td>
+                    <td> - </td>
+                    <td><a class="btn btn-danger">Cancel</a></td>
+                  {% endif %}
+                </tr>
+              {% endfor %}
 
-          </tbody>
-        </table>
-    <div>
+            </tbody>
+          </table>
+        <div>
+      {% endif %}
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-mQ93lEdRIU7WUpPusYS5PQu2Wl0lNx9exjJtTzm7Nq6pZl+rcSkkYVEQ7OIslWAv" crossorigin="anonymous"></script>
 </body>

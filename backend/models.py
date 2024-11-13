@@ -69,3 +69,4 @@ class ServiceRequests(db.Model):
     service_status = db.Column(db.String, default='requested')
     additional_requests = db.Column(db.String)
     remarks = db.Column(db.String)
+    rating = db.Column(db.Float)

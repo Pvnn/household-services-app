@@ -37,70 +37,76 @@
     <div id="canvas">
       <br>
       <h2 class="headings">Today Services</h2><br>
-      <div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Customer Name</th>
-              <th scope="col">Contact Phone</th>
-              <th scope="col">Location</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Aryan</td>
-              <td>XXXXXXXXXX</td>
-              <td>Muvattupuzha(686661)</td>
-              <td style="display: flex;"><a href="#" class="nav-link text-success accept-btn" >Accept</a> / <a href="#" class="nav-link text-danger reject-btn">Reject</a> </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Abhishek</td>
-              <td>XXXXXXXXXX</td>
-              <td>Kothamangalam(686661)</td>
-              <td style="display: flex;"><a href="#" class="nav-link text-success accept-btn">Accept </a> / <a href="#" class="nav-link text-danger reject-btn"> Reject</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {% if requested_services | length ==0 %}
+        <div class="text text-center">
+          <h5 class="headings">There are no services to display</h5>
+        </div>
+      {% else %}
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Contact Phone</th>
+                <th scope="col">Location</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for service in requested_services %}
+                <tr>
+                  <th scope="row">{{ loop.index }}</th>
+                  <td>{{ service.customer.name }}</td>
+                  <td>{{ service.customer.phone }}</td>
+                  <td>{{ service.customer.address | title }} ({{ service.customer.pin_code }})</td>
+                  {% if service.service_status == 'requested' %}
+                    <td style="display: flex;"><a href="#" class="nav-link text-success accept-btn" >Accept</a><a href="#" class="nav-link text-danger reject-btn">Reject</a> </td>
+                  {% else %}
+                    <td class="text text-success">Accepted</td>
+                  {% endif %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
 
       <br>
       <h2 class="headings">Closed Services</h2><br>
-      <div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Customer Name</th>
-              <th scope="col">Contact Phone</th>
-              <th scope="col">Location</th>
-              <th scope="col">Date</th>
-              <th scope="col">Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Bharti</td>
-              <td>XXXXXXXXXX</td>
-              <td>Muvattupuzha(686661)</td>
-              <td>06.10.2024</td>
-              <td>4.5 / 5</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Bevin</td>
-              <td>XXXXXXXXXX</td>
-              <td>Kothamangalam(686661)</td>
-              <td>05.10.2024</td>
-              <td>4.0 / 5</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {% if closed_services | length ==0 %}
+        <div class="text text-center">
+          <h5 class="headings">There are no closed services to display</h5>
+        </div>
+      {% else %}
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Contact Phone</th>
+                <th scope="col">Location</th>
+                <th scope="col">Date</th>
+                <th scope="col">Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for service in closed_services %}
+                <tr>
+                  <th scope="row">{{ loop.index }}</th>
+                  <td>{{ service.customer.name }}</td>
+                  <td>{{ service.customer.phone }}</td>
+                  <td>{{ service.customer.address | title }} ({{ service.customer.pin_code }})</td>
+                  <td>{{ service.date_of_completeion }}</td>
+                  <td>{{ service.rating }} / 5</td>
+                </tr>
+              {% endfor %}
+              
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
 
     <div>
   </div>

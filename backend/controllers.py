@@ -73,7 +73,12 @@ def admin_dash():
 def prof_dash(user_id):
   user = Users.query.filter_by(user_id = user_id).first()
   pro = ServiceProfessionals.query.filter_by(user_id = user_id).first()
-  return render_template('prof-dash.html', user = user, pro=pro)
+  requested_services = ServiceRequests.query.filter(
+    ServiceRequests.service_id == pro.service_id,
+    ServiceRequests.service_status.in_(['requested', 'accepted'])
+).all()
+  closed_services = ServiceRequests.query.filter_by(service_id = pro.service_id, service_status = 'closed').all()
+  return render_template('prof-dash.html', user = user, pro=pro, requested_services = requested_services, closed_services = closed_services)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

@@ -30,8 +30,10 @@ table a {
 }
 
 .card-img-top {
-  height: 150px;
+  margin-top: 10px;
+  height: 120px;
   object-fit: scale-down;
+  margin-bottom: 20px;
 }
 .card-title {
   font-size: 1.1rem;  
@@ -39,5 +41,5 @@ table a {
 }
 .card-text {
   font-size: 0.9rem; 
-  margin-bottom: 10px;  
+  margin-bottom: 15px;  
 }

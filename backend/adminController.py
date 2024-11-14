@@ -61,3 +61,10 @@ def view_request(request_id):
 def view_service(service_id):
   service = Services.query.get(service_id)
   return render_template('admin-view-service.html', service= service)
+
+@app.route('/admin/approve/prof/<int:professional_id>', methods =['GET'])
+def approve_professional(professional_id):
+  pro = ServiceProfessionals.query.get(professional_id)
+  pro.profile_verified = True
+  db.session.commit()
+  return redirect('/admin')

@@ -52,7 +52,12 @@ def edit_service(service_id):
 
   return render_template('service-edit.html', service = service, category_list = category_list)
 
-@app.route('/admin/view/service/<int:request_id>', methods =['GET'])
+@app.route('/admin/view/request/<int:request_id>', methods =['GET'])
 def view_request(request_id):
   request = ServiceRequests.query.get(request_id)
   return render_template('admin-view-request.html', request= request)
+
+@app.route('/admin/view/service/<int:service_id>', methods =['GET'])
+def view_service(service_id):
+  service = Services.query.get(service_id)
+  return render_template('admin-view-service.html', service= service)

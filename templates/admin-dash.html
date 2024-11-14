@@ -18,11 +18,9 @@
       <div style="display: flex;">
         <a class="nav-link active" aria-current="page" href="#">Home</a> 
         <span class="header-span"></span>
-        | 
         <span class="header-span"></span>
         <a class="nav-link" href="#">Search</a>
         <span class="header-span"></span>
-        |
         <span class="header-span"></span>
         <a class="nav-link" href="#">Summary</a>
       </div>
@@ -55,7 +53,7 @@
             <tbody>
               {% for service in services %}
                 <tr>
-                  <th scope="row"> <a href="" class="text"> {{ loop.index }}</a></th>
+                  <th scope="row"> <a href="/admin/view/service/{{ service.service_id }}" class="text"> {{ loop.index }}</a></th>
                   <td>{{service.name}}</td>
                   <td>{{ service.base_price }}</td>
                   <td class="d-flex"><a href="/admin/service/edit/{{ service.service_id }}" class="nav-link text-primary accept-btn" >Edit</a><a href="#" class="nav-link text-danger reject-btn">Delete</a> </td>
@@ -132,7 +130,7 @@
           <tbody>
             {% for request in service_requests %}
               <tr>
-                <th scope="row"> <a href="/admin/view/service/{{ request.request_id }}" class="text text-primary"> {{ loop.index }}</a></th>
+                <th scope="row"> <a href="/admin/view/request/{{ request.request_id }}" class="text text-primary"> {{ loop.index }}</a></th>
                 <td>{{ request.professional.name or 'To be assigned' }}</td>
                 <td>{{ request.date_of_request }}</td>
                 <td>{{ request.requested_service_date }}</td>

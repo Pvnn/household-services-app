@@ -41,3 +41,13 @@ def registerpro():
     return redirect('/userlogin')
   services = Services.query.all()
   return render_template('prof-signup.html', services = services)
+
+@app.route('/user/prof/<int:user_id>/service/<int:request_id>/accept')
+def accept_service(user_id, request_id):
+  pro = ServiceProfessionals.query.filter_by(user_id = user_id).first()
+  request = ServiceRequests.query.get(request_id)
+  request.service_status = 'accepted'
+  request.professional = pro
+  request.professional_id = pro.professional_id
+  db.session.commit()
+  return redirect(f"/user/prof/{user_id}")

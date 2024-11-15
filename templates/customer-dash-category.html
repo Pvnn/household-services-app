@@ -18,11 +18,9 @@
       <div style="display: flex;">
         <a class="nav-link active" aria-current="page" href="/user/customer/{{ user.user_id }}">Home</a>
         <span class="header-span"></span>
-        | 
         <span class="header-span"></span>
         <a class="nav-link" href="#">Search</a>
         <span class="header-span"></span>
-        |
         <span class="header-span"></span>
         <a class="nav-link" href="/user/summary">Summary</a>
       </div>
@@ -78,19 +76,25 @@
             </thead>
             <tbody>
               {% for request in service_requests %}
-                <tr>
-                  <th scope="row">{{ loop.index }}</th>
-                  <td>{{ request.service.name }}</td>
-                  {% if request.status == 'accepted' %}
-                    <td>{{ request.professional.name }}</td>
-                    <td>{{ request.professional.phone }}</td>
-                    <td><a class="btn btn-primary">Close it?</a></td>
-                  {% else %}
+              <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ request.service.name }}</td>
+                {% if request.service_status == 'accepted' %}
+                  <td>{{ request.professional.name }}</td>
+                  <td>{{ request.professional.phone }}</td>
+                  <td><a href="/user/{{ user.user_id }}/service/close/{{ request.request_id }}" class="btn btn-outline-primary">Close it?</a></td>
+                {% else %}
+                  {% if request.service_status == 'requested' %}
                     <td>To be assigned</td>
                     <td> - </td>
                     <td><a class="btn btn-danger">Cancel</a></td>
+                  {% else %}
+                    <td>{{ request.professional.name }}</td>
+                    <td>{{ request.professional.phone }}</td>
+                    <td class="text text-success">Closed</td>
                   {% endif %}
-                </tr>
+                {% endif %}
+              </tr>
               {% endfor %}
 
             </tbody>

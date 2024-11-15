@@ -64,3 +64,18 @@ def book_service(user_id, service_id):
       db.session.commit()
     return redirect(f"/user/customer/{user.user_id}")
   return render_template('customer-book-service.html', user = user, customer = customer, service = service)
+
+@app.route('/user/<int:user_id>/service/close/<int:request_id>', methods= ['GET', 'POST'])
+def close_service(user_id, request_id):
+  user = Users.query.get(user_id)
+  service_request = ServiceRequests.query.get(request_id)
+  if request.method=='POST':
+    remarks = request.form.get('remarks')
+    rating = request.form.get('rating')
+    service_request.remarks = remarks
+    service_request.rating = float(rating)
+    service_request.service_status = 'closed'
+    service_request.date_of_completion = datetime.datetime.strptime(datetime.date.today().strftime("%Y-%m-%d"), "%Y-%m-%d").date()
+    db.session.commit()
+    return redirect(f"/user/customer/{user.user_id}")
+  return render_template('remarks.html', user = user, service_request = service_request)

@@ -98,12 +98,16 @@
                     {% endif %}
                   {% endfor %}
                   {% if pro.user.is_blocked %}
-                    <td class="d-flex"><a href="#" class="nav-link text-info reject-btn">Unblock</a></td>
+                    <td class="d-flex">
+                      <a href="/admin/unblock/prof/{{ pro.professional_id }}" class="nav-link text-success reject-btn">Unblock</a>
+                    </td>
                   {% else %}
                     {% if not pro.profile_verified %}
                       <td class="d-flex"><a href="/admin/approve/prof/{{ pro.professional_id }}" class="nav-link text-success accept-btn">Approve</a> <a href="#" class="nav-link text-warning reject-btn"> Reject</a><a href="#" class="nav-link text-danger reject-btn">Delete</a></td>
                     {% else %}
-                      <td class="d-flex"><a href="#" class="nav-link text-danger reject-btn">Block</a></td>
+                      <td class="d-flex">
+                        <a href="/admin/block/prof/{{ pro.professional_id }}" class="nav-link text-danger reject-btn">Block</a>
+                      </td>
                     {% endif %}
                   {% endif %}
                 </tr>

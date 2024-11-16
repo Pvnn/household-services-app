@@ -14,6 +14,8 @@ def userlogin():
     user = Users.query.filter_by(username = u_name, password = pwd).first()
     if not user:
       return redirect('/userlogin')
+    if user.is_blocked:
+      return render_template('login-denied.html')
     if user.role=='admin':
       return redirect('/admin')
     elif user.role=='professional':

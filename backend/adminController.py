@@ -68,3 +68,24 @@ def approve_professional(professional_id):
   pro.profile_verified = True
   db.session.commit()
   return redirect('/admin')
+
+@app.route('/admin/block/prof/<int:professional_id>')
+def block_professional(professional_id):
+  pro = ServiceProfessionals.query.get(professional_id)
+  user = Users.query.get(pro.user_id)
+  user.is_blocked = True
+  for request in pro.service_requests:
+    if request.service_status=='accepted':
+      request.service_status = 'requested'
+      request.professional_id = None
+  db.session.commit()
+  return redirect('/admin')
+
+@app.route('/admin/unblock/prof/<int:professional_id>')
+def unblock_professional(professional_id):
+  pro = ServiceProfessionals.query.get(professional_id)
+  user = Users.query.get(pro.user_id)
+  user.is_blocked = False
+  db.session.commit()
+  return redirect('/admin')
+

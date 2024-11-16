@@ -5,24 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Summary</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="../static/summary.css">
-  <link rel="stylesheet" href="../static/navbar.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='summary.css') }}">
 </head>
 <body>
   <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand d-flex align-items-center" href="#" style="text-decoration: none;">
-        <img src="../static/logo.png" alt="Chorely Logo" width="50" height="50" id="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Chorely Logo" width="50" height="50" id="logo">
         <span style="font-size: 1.5rem;">Chorely</span>
       </a>
       <div style="display: flex;">
         <a class="nav-link active" aria-current="page" href="/user/customer/{{ user.user_id }}">Home</a> 
         <span class="header-span"></span>
-        | 
         <span class="header-span"></span>
         <a class="nav-link" href="#">Search</a>
         <span class="header-span"></span>
-        |
         <span class="header-span"></span>
         <a class="nav-link" href="#">Summary</a>
       </div>
@@ -35,14 +33,42 @@
   </nav>
 
 
-  <div id="main" class="d-flex justify-content-center mt-4">
-    <div class="text-center">
-      <h2 class="headings">Service Requests</h2>
-      <br>
-      <img src="../static/images/cleaning.png" alt="..." class="mt-2">
+  <div id="main">
+    <div id="canvas">
+      <h2 class="headings text text-center mb-5">Service Remarks</h2><br>
+      <div style="height: 50vh; width: 50%; margin: auto;">
+        <canvas id="myChart"></canvas>
+      </div>
     </div>
-  </div>
+    
 
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const labels = {{ labels | tojson }};
+    const data = {
+      labels: labels,
+      datasets: [{
+          label: 'Sales',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: {{ data | tojson }}
+      }]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: { maintainAspectRatio: false }
+    };
+
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+
+
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-mQ93lEdRIU7WUpPusYS5PQu2Wl0lNx9exjJtTzm7Nq6pZl+rcSkkYVEQ7OIslWAv" crossorigin="anonymous"></script>
 </body>

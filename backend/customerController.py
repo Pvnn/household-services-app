@@ -79,3 +79,25 @@ def close_service(user_id, request_id):
     db.session.commit()
     return redirect(f"/user/customer/{user.user_id}")
   return render_template('remarks.html', user = user, service_request = service_request)
+
+
+@app.route('/user/<int:user_id>/summary')
+def show_summary(user_id):
+  labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+  ]
+ 
+  data = [0, 10, 15, 8, 22, 18, 25]
+  user = Users.query.get(user_id)
+  # Return the components to the HTML template 
+  return render_template(
+    template_name_or_list='customer-summary.html',
+    data=data,
+    labels=labels,
+    user = user
+  )

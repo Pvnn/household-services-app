@@ -103,7 +103,7 @@
                     {% if request.service_status == 'requested' %}
                       <td>To be assigned</td>
                       <td> - </td>
-                      <td><a class="btn btn-danger">Cancel</a></td>
+                      <td><a href="/user/{{ user.user_id }}/service/cancel/{{ request.request_id }}" class="btn btn-danger">Cancel</a></td>
                     {% else %}
                       <td>{{ request.professional.name }}</td>
                       <td>{{ request.professional.phone }}</td>

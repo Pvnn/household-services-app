@@ -80,6 +80,14 @@ def close_service(user_id, request_id):
     return redirect(f"/user/customer/{user.user_id}")
   return render_template('remarks.html', user = user, service_request = service_request)
 
+@app.route('/user/<int:user_id>/service/cancel/<int:request_id>')
+def cancel_request(user_id,request_id):
+  ServiceRejections.query.filter_by(request_id = request_id).delete()
+  ServiceRequests.query.filter_by(request_id = request_id).delete()
+  db.session.commit()
+  return redirect(f"/user/customer/{user_id}")
+
+
 
 @app.route('/user/<int:user_id>/summary')
 def show_summary(user_id):

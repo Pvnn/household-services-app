@@ -3,21 +3,17 @@ from datetime import date
 
 class Users(db.Model):
   __tablename__ = 'Users'
-  
   user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   username = db.Column(db.String, unique=True, nullable=False)
   password = db.Column(db.String, nullable=False)
   role = db.Column(db.String, nullable=False)
   is_blocked = db.Column(db.Boolean, default=False)
-  
-
   service_professional = db.relationship('ServiceProfessionals', backref='user', uselist=False)
   customer = db.relationship('Customers', backref='user', uselist=False)
 
 
 class Services(db.Model):
     __tablename__ = 'Services'
-    
     service_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String)
@@ -30,7 +26,6 @@ class Services(db.Model):
 
 class ServiceProfessionals(db.Model):
     __tablename__ = 'ServiceProfessionals'
-    
     professional_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'), unique=True, nullable=False)
     service_id = db.Column(db.Integer, db.ForeignKey('Services.service_id'), nullable=False)
@@ -45,7 +40,6 @@ class ServiceProfessionals(db.Model):
 
 class Customers(db.Model):
     __tablename__ = 'Customers'
-    
     customer_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'), unique=True, nullable=False)
     name = db.Column(db.String)
@@ -58,7 +52,6 @@ class Customers(db.Model):
 
 class ServiceRequests(db.Model):
     __tablename__ = 'ServiceRequests'
-    
     request_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     service_id = db.Column(db.Integer, db.ForeignKey('Services.service_id'), nullable=False)
     customer_id = db.Column(db.Integer, db.ForeignKey('Customers.customer_id'), nullable=False)
@@ -70,3 +63,11 @@ class ServiceRequests(db.Model):
     additional_requests = db.Column(db.String)
     remarks = db.Column(db.String)
     rating = db.Column(db.Float)
+
+class ServiceRejections(db.Model):
+    __tablename__ = 'ServiceRejections'
+    rejection_id = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    request_id = db.Column(db.Integer, db.ForeignKey('ServiceRequests.request_id'), nullable=False)
+    professional_id = db.Column(db.Integer, db.ForeignKey('ServiceProfessionals.professional_id'), nullable = False)
+    professional = db.relationship('ServiceProfessionals', backref='rejected_services')
+

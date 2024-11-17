@@ -6,10 +6,13 @@ from .models import *
 def prof_dash(user_id):
   user = Users.query.filter_by(user_id = user_id).first()
   pro = ServiceProfessionals.query.filter_by(user_id = user_id).first()
+  rejected_services = ServiceRejections.query.filter_by(professional_id = pro.professional_id).all()
+  rejected_service_ids =[request.request_id for request in rejected_services]
   requested_services = ServiceRequests.query.filter(
-    ServiceRequests.service_id == pro.service_id,
-    ServiceRequests.service_status.in_(['requested', 'accepted'])
-).all()
+    ServiceRequests.service_id == pro.service_id,ServiceRequests.service_status.in_(['requested', 'accepted']), ~ServiceRequests.request_id.in_(rejected_service_ids)).all()
+  for service in requested_services:
+    if service.professional_id and service.professional_id!=pro.professional_id:
+      requested_services.remove(service)
   closed_services = ServiceRequests.query.filter_by(service_id = pro.service_id, service_status = 'closed').all()
   return render_template('prof-dash.html', user = user, pro=pro, requested_services = requested_services, closed_services = closed_services)
 
@@ -49,5 +52,14 @@ def accept_service(user_id, request_id):
   request.service_status = 'accepted'
   request.professional = pro
   request.professional_id = pro.professional_id
+  ServiceRejections.query.filter_by(request_id = request_id).delete()
+  db.session.commit()
+  return redirect(f"/user/prof/{user_id}")
+
+@app.route('/user/prof/<int:user_id>/service/<int:request_id>/reject')
+def reject_request(user_id, request_id):
+  pro = ServiceProfessionals.query.filter_by(user_id = user_id).first()
+  new_rejection = ServiceRejections(request_id = request_id, professional_id= pro.professional_id)
+  db.session.add(new_rejection)
   db.session.commit()
   return redirect(f"/user/prof/{user_id}")

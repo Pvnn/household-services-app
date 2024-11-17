@@ -34,7 +34,7 @@
   <div id="main">
     <div id="canvas">
       <br>
-      <h2 class="headings">Today Services</h2><br>
+      <h2 class="headings">Open Services</h2><br>
       {% if requested_services | length ==0 %}
         <div class="text text-center">
           <h5 class="headings">There are no services to display</h5>
@@ -59,7 +59,7 @@
                   <td>{{ service.customer.phone }}</td>
                   <td>{{ service.customer.address | title }} ({{ service.customer.pin_code }})</td>
                   {% if service.service_status == 'requested' %}
-                    <td style="display: flex;"><a href="/user/prof/{{ pro.user_id }}/service/{{ service.request_id }}/accept" class="nav-link text-success accept-btn" >Accept</a><a href="#" class="nav-link text-danger reject-btn">Reject</a> </td>
+                    <td style="display: flex;"><a href="/user/prof/{{ pro.user_id }}/service/{{ service.request_id }}/accept" class="nav-link text-success accept-btn" >Accept</a><a href="/user/prof/{{ pro.user_id }}/service/{{ service.request_id }}/reject" class="nav-link text-danger reject-btn">Reject</a> </td>
                   {% else %}
                     <td class="text text-success">Accepted</td>
                   {% endif %}
@@ -96,7 +96,7 @@
                   <td>{{ service.customer.name }}</td>
                   <td>{{ service.customer.phone }}</td>
                   <td>{{ service.customer.address | title }} ({{ service.customer.pin_code }})</td>
-                  <td>{{ service.date_of_completeion }}</td>
+                  <td>{{ service.date_of_completion }}</td>
                   <td>{{ service.rating }} / 5</td>
                 </tr>
               {% endfor %}

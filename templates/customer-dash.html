@@ -16,10 +16,10 @@
         <span style="font-size: 1.5rem;">Chorely</span>
       </a>
       <div style="display: flex;">
-        <a class="nav-link active" aria-current="page" href="/user">Home</a>
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
         <span class="header-span"></span>
         <span class="header-span"></span>
-        <a class="nav-link" href="/user/customer/{{ user.user_id }}">Search</a>
+        <a class="nav-link" href="/customer/{{ customer.customer_id }}/search">Search</a>
         <span class="header-span"></span>
         <span class="header-span"></span>
         <a class="nav-link" href="/user/{{ user.user_id }}/summary">Summary</a>
@@ -38,7 +38,7 @@
         <h3 class="headings">Looking For?</h3>
         <div class="row g-4 justify-content-center" style="margin-top: 20px;">
           <div class="col">
-            <div class="card custom-card mx-auto" style="width: 18rem;">
+            <div class="card custom-card mx-auto" style="width: 18rem; border: none;">
               <img src="{{ url_for('static', filename='cleaning.png') }}" class="card-img-top card-icon" alt="cleaning-mop">
               <div class="card-body">
                 <h5 class="card-title">Cleaning Services</h5>
@@ -48,7 +48,7 @@
             </div>
           </div>
           <div class="col">
-            <div class="card custom-card mx-auto" style="width: 18rem;">
+            <div class="card custom-card mx-auto" style="width: 18rem; border: none;">
               <img src="{{ url_for('static', filename='salon.png') }}" class="card-img-top card-icon" alt="cleaning-mop">
               <div class="card-body">
                 <h5 class="card-title">Salon Services</h5>
@@ -58,7 +58,7 @@
             </div>
           </div>
           <div class="col">
-            <div class="card custom-card mx-auto" style="width: 18rem;">
+            <div class="card custom-card mx-auto" style="width: 18rem; border: none;">
               <img src="{{ url_for('static', filename='care.png') }}" class="card-img-top card-icon" alt="cleaning-mop">
               <div class="card-body">
                 <h5 class="card-title">Care Services</h5>
@@ -69,7 +69,7 @@
           </div>
         </div>
         <div style="text-align: center; margin: 20px;">
-          <button class="btn btn-secondary">View More</button>
+          <a href="/customer/{{ customer.customer_id }}/search" class="btn btn-outline-secondary">View More</a>
         </div>
       </div>
       

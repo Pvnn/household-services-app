@@ -88,6 +88,36 @@ def cancel_request(user_id,request_id):
   return redirect(f"/user/customer/{user_id}")
 
 
+@app.route('/customer/<int:customer_id>/search', methods =['GET', 'POST'])
+def customer_search(customer_id):
+  customer = Customers.query.get(customer_id)
+  if request.method=='POST':
+    query_string = request.form.get('query_string')
+    result= []
+    if query_string:
+      for word in query_string.split():
+        names_filter= Services.query.filter(Services.name.ilike(f"%{word}%")).all()
+        description_filter = Services.query.filter(Services.description.ilike(f"%{word}%")).all()
+        category_filter= Services.query.filter(Services.category.ilike(f"%{word}%")).all()
+        if word.isdigit():
+          pin_filter = []
+          pros = ServiceProfessionals.query.filter(ServiceProfessionals.pin_code==int(word)).all()
+          for pro in pros:
+            pin_filter.append(pro.service)
+          if pin_filter:
+            result.extend(pin_filter)
+        if names_filter:
+          result.extend(names_filter)
+        if description_filter:
+          result.extend(description_filter)
+        if category_filter:
+          result.extend(category_filter)
+      temp = set(result)
+      result = list(temp)
+      return render_template('customer-search.html', services= result, customer = customer)
+  all_services = Services.query.all()
+  return render_template('customer-search.html', services= all_services, customer = customer)
+
 
 @app.route('/user/<int:user_id>/summary')
 def show_summary(user_id):

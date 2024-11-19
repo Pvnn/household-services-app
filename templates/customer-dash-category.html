@@ -19,7 +19,7 @@
         <a class="nav-link active" aria-current="page" href="/user/customer/{{ user.user_id }}">Home</a>
         <span class="header-span"></span>
         <span class="header-span"></span>
-        <a class="nav-link" href="#">Search</a>
+        <a class="nav-link" href="/customer/{{ customer.customer_id }}/search">Search</a>
         <span class="header-span"></span>
         <span class="header-span"></span>
         <a class="nav-link" href="/user/summary">Summary</a>
@@ -43,7 +43,7 @@
           <div class="row hidden-md-up">
             {% for service in services %}
               <div class="col-md-4">
-                <div class="card" style="padding: 20px;">
+                <div class="card mb-3" style="padding: 20px;">
                   <div class="card-block">
                     <h4 class="card-title">{{service.name | title }}</h4>
                     <h6 class="card-subtitle text-muted">Time required : {{ service.time_required }} hours</h6>

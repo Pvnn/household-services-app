@@ -1,6 +1,8 @@
 from flask import Flask,redirect,request, render_template
 from flask import current_app as app
 from .models import *
+import datetime
+from sqlalchemy import or_
 
 @app.route('/user/prof/<int:user_id>')
 def prof_dash(user_id):
@@ -63,3 +65,34 @@ def reject_request(user_id, request_id):
   db.session.add(new_rejection)
   db.session.commit()
   return redirect(f"/user/prof/{user_id}")
+
+@app.route('/prof/<int:professional_id>/search', methods = ['GET', 'POST'])
+def prof_search(professional_id):
+  pro = ServiceProfessionals.query.get(professional_id)
+  results = ServiceRequests.query.filter_by(professional_id = pro.professional_id).all()
+  if request.method=='POST':
+    query_string = request.form.get('query_string')
+    if query_string:
+      for word in query_string.split():
+        results=[]
+        name_filter = ServiceRequests.query.join(Customers).filter(ServiceRequests.professional_id==pro.professional_id, Customers.name.ilike(f"%{word}%")).all()
+        address_filter = ServiceRequests.query.join(Customers).filter(ServiceRequests.professional_id==pro.professional_id, Customers.address.ilike(f"%{word}%")).all()
+        if word[0].isdigit():
+          if "/" in word or "-" in word:
+            word = word.strip().replace("/", "-")
+            query_date = datetime.datetime.strptime(word.strip(), "%Y-%m-%d").date()
+            date_filter = ServiceRequests.query.filter(ServiceRequests.professional_id==pro.professional_id, or_(ServiceRequests.date_of_request== query_date, ServiceRequests.date_of_completion == query_date, ServiceRequests.requested_service_date == query_date)).all()
+            print(date_filter)
+            if date_filter:
+              results.extend(date_filter)
+          else:
+            pin_filter = ServiceRequests.query.join(Customers).filter(ServiceRequests.professional_id==pro.professional_id, Customers.pin_code==int(word)).all()
+            if pin_filter:
+              results.extend(pin_filter)
+        if name_filter:
+          results.extend(name_filter)
+        if address_filter:
+          results.extend(address_filter)
+      return render_template('prof-search.html', pro=pro, results = results)
+
+  return render_template('prof-search.html', pro=pro, results = results)

@@ -196,3 +196,18 @@ def admin_search():
     return render_template('admin-search.html', results = all_requests, key='requests')
   elif key=='professionals':
     return render_template('admin-search.html', results = all_pros, key='professionals')
+  
+@app.route('/admin/profile')
+def view_admin_profile():
+  user = Users.query.filter_by(role= 'admin').first()
+  return render_template('admin-profile.html', user = user)
+
+@app.route('/admin/profile/edit', methods = ['GET', 'POST'])
+def edit_admin_profile():
+  user = Users.query.filter_by(role= 'admin').first()
+  if request.method=='POST':
+    username = request.form.get('username')
+    user.username = username
+    db.session.commit()
+    return redirect('/admin/profile')
+  return render_template('admin-profile-edit.html', user = user)

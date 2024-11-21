@@ -1,0 +1,33 @@
+img{
+  width: 250px;
+}
+a{
+  text-decoration: none;
+}
+
+#main{
+  width: 60%;
+  margin-top: 90px;
+}
+
+#left{
+  height: 580px;
+  width: 40%;
+  padding-top: 110px;
+}
+#right{
+  width: 60%; 
+  height: 580px;
+}
+
+#form-body{
+  padding: 60px 50px 20px 50px;
+}
+
+.image-container{
+  width: max-content;
+}
+
+.headings{
+  font-family: quicksand;
+}

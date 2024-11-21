@@ -25,7 +25,7 @@
         <a class="nav-link" href="#">Summary</a>
       </div>
       <div style="display: flex; width: 120px; align-items: end;">
-        <a class="nav-link" href="#">{{ user.username }}</a>
+        <a class="nav-link" href="/user/{{ user.user_id }}/profile">{{ user.username }}</a>
         <span style="margin: 0px 25px 0px 0px;"></span>
         <a class="nav-link text-danger" href="/userlogin">Logout</a>
       </div>
@@ -36,7 +36,7 @@
   <div id="main">
     <div id="canvas" class="mx-auto">
       <div class="text text-center">
-        <h1 class="headings">View Profile</h1>
+        <h1 class="headings">Edit Profile</h1>
       </div>
       <div class="form-body mx-auto my-4 py-3">
 
@@ -47,29 +47,34 @@
           <div class="card-body px-4">
             <h5 class="card-title">{{ customer.name | title }}</h5>
             <p class="card-text">{{ customer.user.username }}</p>
-            <table class="table table-borderless mb-3">
-              <tbody>
-                <tr>
-                  <th>Email</th>
-                  <td>{{ customer.email }}</td>
-                </tr>
-                </tr>
-                  <th>Address</th>
-                  <td>{{ customer.address | title }} </td>
-                </tr>
-                <tr>
-                  <th>Pin Code</th>
-                  <td>{{ customer.pin_code }}</td>
-                </tr>
-                <tr>
-                  <th>Phone</th>
-                  <td>{{ customer.phone }}</td>
-                </tr>
-                
-              </tbody>
-            </table>
-            <a href="/user/customer/{{ user.user_id }}" class="btn btn-primary mx-3">Go Back</a>
-            <a href="/user/{{ user.user_id }}/profile/edit" class="btn btn-secondary mx-3">Edit</a>
+            <form action="/user/{{ user.user_id }}/profile/edit" method="post">
+              <table class="table table-borderless mb-3">
+                <tbody>
+                  <tr>
+                    <th>Name</th>
+                    <td><input type="text" class="form-control" name="name" value="{{ customer.name }}" required></td>
+                  </tr>
+                    <th>Email</th>
+                    <td><input type="email" class="form-control" name="email" value="{{ customer.email }}" required></td>
+                  </tr>
+                  </tr>
+                    <th>Address</th>
+                    <td><input type="text" class="form-control" name="address" value="{{ customer.address }}" required></td>
+                  </tr>
+                  <tr>
+                    <th>Pin Code</th>
+                    <td><input type="text" class="form-control" name="pin_code" value="{{ customer.pin_code }}" required></td>
+                  </tr>
+                  <tr>
+                    <th>Phone</th>
+                    <td><input type="text" class="form-control" name="phone" value="{{ customer.phone }}" required></td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              <a href="javascript: history.back()" class="btn btn-danger mx-3">Cancel</a>
+              <button type="submit" class="btn btn-success mx-3">Save</button>
+            </form>
           </div>
           <div class="mt-3 card-footer text-body-secondary">
             Customer

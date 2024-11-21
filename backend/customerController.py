@@ -125,6 +125,25 @@ def view_customer_profile(user_id):
   customer = Customers.query.filter_by(user_id = user_id).first()
   return render_template('customer-profile.html', user=user, customer = customer)
 
+@app.route('/user/<int:user_id>/profile/edit', methods = ['GET', 'POST'])
+def edit_customer_profile(user_id):
+  user = Users.query.get(user_id)
+  customer = Customers.query.filter_by(user_id = user_id).first()
+  if request.method=='POST':
+    name = request.form.get('name')
+    email = request.form.get('email')
+    phone = request.form.get('phone')
+    pin_code = request.form.get('pin_code')
+    address = request.form.get('address')
+    customer.name = name
+    customer.email = email
+    customer.phone = phone
+    customer.pin_code = pin_code
+    customer.address = address
+    db.session.commit()
+    return redirect(f"/user/{user.user_id}/profile")
+  return render_template('customer-profile-edit.html', user=user, customer = customer)
+
 
 @app.route('/user/<int:user_id>/summary')
 def show_summary(user_id):

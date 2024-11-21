@@ -19,13 +19,13 @@
         <a class="nav-link active" aria-current="page" href="/user/customer/{{ user.user_id }}">Home</a> 
         <span class="header-span"></span>
         <span class="header-span"></span>
-        <a class="nav-link" href="#">Search</a>
+        <a class="nav-link" href="/customer/{{ customer.customer_id }}/search">Search</a>
         <span class="header-span"></span>
         <span class="header-span"></span>
         <a class="nav-link" href="#">Summary</a>
       </div>
       <div style="display: flex; width: 120px; align-items: end;">
-        <a class="nav-link" href="#">User</a>
+        <a class="nav-link" href="/user/{{ user.user_id }}/profile">User</a>
         <span style="margin: 0px 25px 0px 0px;"></span>
         <a class="nav-link text-danger" href="/userlogin">Logout</a>
       </div>

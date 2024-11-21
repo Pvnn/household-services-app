@@ -11,12 +11,11 @@ def prof_dash(user_id):
   rejected_services = ServiceRejections.query.filter_by(professional_id = pro.professional_id).all()
   rejected_service_ids =[request.request_id for request in rejected_services]
   requested_services = ServiceRequests.query.filter(
-    ServiceRequests.service_id == pro.service_id,ServiceRequests.service_status.in_(['requested', 'accepted']), ~ServiceRequests.request_id.in_(rejected_service_ids)).all()
-  for service in requested_services:
-    if service.professional_id and service.professional_id!=pro.professional_id:
-      requested_services.remove(service)
+    ServiceRequests.service_id == pro.service_id,ServiceRequests.service_status.in_(['requested']), ~ServiceRequests.request_id.in_(rejected_service_ids)).all()
+  accepted_services = ServiceRequests.query.filter_by(service_status = 'accepted', professional_id = pro.professional_id).all()
+  open_services = requested_services+accepted_services
   closed_services = ServiceRequests.query.filter_by(service_id = pro.service_id, service_status = 'closed').all()
-  return render_template('prof-dash.html', user = user, pro=pro, requested_services = requested_services, closed_services = closed_services)
+  return render_template('prof-dash.html', user = user, pro=pro, requested_services = open_services, closed_services = closed_services)
 
 
 
@@ -96,3 +95,33 @@ def prof_search(professional_id):
       return render_template('prof-search.html', pro=pro, results = results)
 
   return render_template('prof-search.html', pro=pro, results = results)
+
+@app.route('/prof/<int:professional_id>/profile')
+def view_professional_profile(professional_id):
+  pro = ServiceProfessionals.query.get(professional_id)
+  user = Users.query.get(pro.user.user_id)
+  return render_template('prof-profile.html', pro = pro, user=user)
+
+@app.route('/prof/<int:professional_id>/profile/edit', methods =['GET', 'POST'])
+def edit_professional_profile(professional_id):
+  pro = ServiceProfessionals.query.get(professional_id)
+  user = Users.query.get(pro.user.user_id)
+  if request.method=='POST':
+    name = request.form.get('name')
+    phone = request.form.get('phone')
+    pin_code = request.form.get('pin_code')
+    address = request.form.get('address')
+    service_id = request.form.get('service')
+    if service_id:
+      pro.service_id = service_id
+      new_service = Services.query.get(service_id)
+      pro.service = new_service
+    pro.name = name
+    pro.phone = phone
+    pro.pin_code = pin_code
+    pro.address = address
+    db.session.commit()
+    return redirect(f"/prof/{ pro.professional_id }/profile")
+  other_services = Services.query.filter(Services.service_id!=pro.service.service_id).all()
+  pending_requests = ServiceRequests.query.filter(ServiceRequests.professional_id== pro.professional_id, ServiceRequests.service_status=='accepted').all()
+  return render_template('prof-profile-edit.html', pro = pro, user=user, services = other_services, pending_requests= pending_requests) 

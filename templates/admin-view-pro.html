@@ -69,7 +69,7 @@
           <div class="text justify-content-center d-flex">
             <a href="javascript: history.back()" class="btn btn-primary ms-3">Go back</a>
             {% if pro.profile_verified %}
-            <a href="#" class="btn btn-danger mx-3">Block</a>
+            <a href="/admin/block/prof/{{pro.professional_id }}" class="btn btn-danger mx-3">Block</a>
             {% else %}
               <a href="/admin/approve/prof/{{ pro.professional_id }}" class="btn btn-success mx-3">Verify</a>
             {% endif %}

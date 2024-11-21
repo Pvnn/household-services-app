@@ -1,0 +1,21 @@
+*{
+  margin: 0px;
+}
+#main{
+  margin-top: 120px;
+}
+#canvas{
+  width: 80%;
+}
+.form-body{
+  width: 70%;
+  height: max-content;
+}
+
+th{
+  text-align: start;
+}
+
+td{
+  text-align: end;
+}

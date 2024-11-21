@@ -54,6 +54,11 @@ def edit_service(service_id):
 
   return render_template('service-edit.html', service = service, category_list = category_list)
 
+@app.route('/admin/view/customer/<int:customer_id>', methods =['GET'])
+def view_customer(customer_id):
+  customer = Customers.query.get(customer_id)
+  return render_template('admin-view-customer.html', customer = customer)
+
 @app.route('/admin/view/request/<int:request_id>', methods =['GET'])
 def view_request(request_id):
   request = ServiceRequests.query.get(request_id)

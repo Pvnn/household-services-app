@@ -119,6 +119,13 @@ def customer_search(customer_id):
   return render_template('customer-search.html', services= all_services, customer = customer)
 
 
+@app.route('/user/<int:user_id>/profile')
+def view_customer_profile(user_id):
+  user = Users.query.get(user_id)
+  customer = Customers.query.filter_by(user_id = user_id).first()
+  return render_template('customer-profile.html', user=user, customer = customer)
+
+
 @app.route('/user/<int:user_id>/summary')
 def show_summary(user_id):
   labels = [

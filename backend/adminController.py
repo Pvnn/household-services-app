@@ -211,3 +211,21 @@ def edit_admin_profile():
     db.session.commit()
     return redirect('/admin/profile')
   return render_template('admin-profile-edit.html', user = user)
+
+
+@app.route('/admin/block/customer/<int:customer_id>')
+def block_customer(customer_id):
+  customer = Customers.query.get(customer_id)
+  customer.user.is_blocked = True
+  customer_request_ids = [request.request_id for request in ServiceRequests.query.filter_by(customer_id = customer_id)]
+  ServiceRejections.query.filter(ServiceRejections.request_id.in_(customer_request_ids)).delete()
+  ServiceRequests.query.filter(ServiceRequests.customer_id== customer_id, ServiceRequests.service_status!='closed').delete()
+  db.session.commit()
+  return redirect('/admin/search')
+
+@app.route('/admin/unblock/customer/<int:customer_id>')
+def unblock_customer(customer_id):
+  customer = Customers.query.get(customer_id)
+  customer.user.is_blocked = False
+  db.session.commit()
+  return redirect('/admin/search')

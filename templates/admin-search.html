@@ -94,10 +94,10 @@
                           <td>{{ customer.name }}</td>
                           <td>{{ customer.phone }}</td>
                           <td>{{ customer.address | title }} ({{ customer.pin_code }})</td>
-                          {% if customer.is_blocked %}
-                            <td style="display: flex;"><a href="#" class="btn btn-success">Unblock</a></td>
+                          {% if customer.user.is_blocked %}
+                            <td style="display: flex;"><a href="/admin/unblock/customer/{{ customer.customer_id }}" class="btn btn-success">Unblock</a></td>
                           {% else %}
-                            <td class="text text-success"><a href="#" class="btn btn-danger">Block</a></td>
+                            <td class="text text-success"><a href="/admin/block/customer/{{ customer.customer_id }}" class="btn btn-danger">Block</a></td>
                           {% endif %}
                         </tr>
                       {% endfor %}
@@ -135,6 +135,7 @@
                         <th scope="col">ID</th>
                         <th scope="col">Customer Name</th>
                         <th scope="col">Contact Phone</th>
+                        <th scope="col">Assigned Professional</th>
                         <th scope="col">Location</th>
                         <th scope="col">Status</th>
                       </tr>
@@ -145,6 +146,7 @@
                           <th scope="row">{{ loop.index }}</th>
                           <td>{{ service.customer.name }}</td>
                           <td>{{ service.customer.phone }}</td>
+                          <td>{{ service.professional.name or 'To be assigned' }}</td>
                           <td>{{ service.customer.address | title }} ({{ service.customer.pin_code }})</td>
                           <td class="text text-primary">{{ service.service_status | title}}</td>
                         </tr>

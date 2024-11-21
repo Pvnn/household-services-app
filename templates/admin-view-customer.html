@@ -69,7 +69,11 @@
               </tbody>
             </table>
             <a href="javascript: history.back()" class="btn btn-primary mx-3">Go Back</a>
-            <a href="#" class="btn btn-danger mx-3">Block</a>
+            {% if customer.user.is_blocked %}
+              <a href="/admin/unblock/customer/{{ customer.customer_id }}" class="btn btn-success">Unblock</a>
+            {% else %}
+              <a href="/admin/block/customer/{{ customer.customer_id }}" class="btn btn-danger mx-3">Block</a>
+            {% endif %}
           </div>
           <div class="mt-3 card-footer text-body-secondary">
             Customer

@@ -16,16 +16,16 @@
         <span style="font-size: 1.5rem;">Chorely</span>
       </a>
       <div style="display: flex;">
-        <a class="nav-link active" aria-current="page" href="/user/customer/{{ user.user_id }}">Home</a> 
+        <a class="nav-link active" aria-current="page" href="/user/customer/{{ user.user_id }}">Home</a>
         <span class="header-span"></span>
         <span class="header-span"></span>
-        <a class="nav-link" href="/customer/{{ customer.customer_id }}/search">Search</a>
+        <a class="nav-link" href="/customer/{{ user.customer.customer_id }}/search">Search</a>
         <span class="header-span"></span>
         <span class="header-span"></span>
         <a class="nav-link" href="#">Summary</a>
       </div>
-      <div style="display: flex; width: 120px; align-items: end;">
-        <a class="nav-link" href="/user/{{ user.user_id }}/profile">User</a>
+      <div class="d-flex text text-end">
+        <a class="nav-link" href="/user/{{ user.user_id }}/profile">{{ user.username }}</a>
         <span style="margin: 0px 25px 0px 0px;"></span>
         <a class="nav-link text-danger" href="/userlogin">Logout</a>
       </div>
@@ -35,8 +35,8 @@
 
   <div id="main">
     <div id="canvas">
-      <h2 class="headings text text-center mb-5">Service Remarks</h2><br>
-      <div style="height: 50vh; width: 50%; margin: auto;">
+      <h2 class="headings text text-center mb-5">Summary</h2><br>
+      <div style="height: 60vh; width: 60%; margin: auto;">
         <canvas id="myChart"></canvas>
       </div>
     </div>
@@ -49,17 +49,24 @@
     const data = {
       labels: labels,
       datasets: [{
-          label: 'Sales',
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
+          label: 'Service Requests',
+          backgroundColor: 'rgb(173, 216, 230)',
+          hoverBackgroundColor: 'rgb(124, 193, 215)',
+          borderColor: 'rgb(173, 216, 230)',
           data: {{ data | tojson }}
       }]
     };
 
     const config = {
-        type: 'line',
-        data: data,
-        options: { maintainAspectRatio: false }
+      type: 'bar',
+      data: data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      },
     };
 
     const myChart = new Chart(

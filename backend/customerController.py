@@ -147,21 +147,10 @@ def edit_customer_profile(user_id):
 
 @app.route('/user/<int:user_id>/summary')
 def show_summary(user_id):
-  labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-  ]
- 
-  data = [0, 10, 15, 8, 22, 18, 25]
   user = Users.query.get(user_id)
-  # Return the components to the HTML template 
-  return render_template(
-    template_name_or_list='customer-summary.html',
-    data=data,
-    labels=labels,
-    user = user
-  )
+  labels = ['Requested', 'Accepted', 'Closed']
+  requested_services = ServiceRequests.query.filter_by(customer_id = user.customer.customer_id, service_status = 'requested').all()
+  accepted_services = ServiceRequests.query.filter_by(customer_id = user.customer.customer_id, service_status = 'accepted').all()
+  closed_services = ServiceRequests.query.filter_by(customer_id = user.customer.customer_id, service_status = 'closed').all()
+  data = [len(requested_services), len(accepted_services), len(closed_services)]
+  return render_template('customer-summary.html',data=data,labels=labels,user = user)

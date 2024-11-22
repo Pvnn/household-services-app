@@ -14,7 +14,7 @@ def prof_dash(user_id):
     ServiceRequests.service_id == pro.service_id,ServiceRequests.service_status.in_(['requested']), ~ServiceRequests.request_id.in_(rejected_service_ids)).all()
   accepted_services = ServiceRequests.query.filter_by(service_status = 'accepted', professional_id = pro.professional_id).all()
   open_services = requested_services+accepted_services
-  closed_services = ServiceRequests.query.filter_by(service_id = pro.service_id, service_status = 'closed').all()
+  closed_services = ServiceRequests.query.filter_by(professional_id = pro.professional_id, service_status = 'closed').all()
   return render_template('prof-dash.html', user = user, pro=pro, requested_services = open_services, closed_services = closed_services)
 
 
@@ -125,3 +125,13 @@ def edit_professional_profile(professional_id):
   other_services = Services.query.filter(Services.service_id!=pro.service.service_id).all()
   pending_requests = ServiceRequests.query.filter(ServiceRequests.professional_id== pro.professional_id, ServiceRequests.service_status=='accepted').all()
   return render_template('prof-profile-edit.html', pro = pro, user=user, services = other_services, pending_requests= pending_requests) 
+
+@app.route('/prof/<int:professional_id>/summary')
+def show_prof_summary(professional_id):
+  pro = ServiceProfessionals.query.get(professional_id)
+  ratings = [request.rating for request in ServiceRequests.query.filter_by(professional_id=professional_id, service_status='closed').all()]
+  labels = ['5 stars', '4 stars', '3 stars', '2 stars', '1 star']
+  data=[ratings.count(5.0), ratings.count(4.0), ratings.count(3.0), ratings.count(2.0), ratings.count(1.0)]
+  print(ratings)
+  print(data)
+  return render_template('prof-summary.html',data=data,labels=labels, pro = pro)

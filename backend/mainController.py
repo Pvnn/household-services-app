@@ -13,7 +13,7 @@ def userlogin():
     pwd = request.form.get("pwd")
     user = Users.query.filter_by(username = u_name, password = pwd).first()
     if not user:
-      return redirect('/userlogin')
+      return render_template('login.html', key=1)
     if user.is_blocked:
       return render_template('login-denied.html')
     if user.role=='admin':
@@ -23,7 +23,7 @@ def userlogin():
     else:
       return redirect(f"user/customer/{user.user_id}")
     
-  return render_template('login.html')
+  return render_template('login.html', key=0)
 
 
 

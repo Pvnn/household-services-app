@@ -19,6 +19,8 @@ def userlogin():
     if user.role=='admin':
       return redirect('/admin')
     elif user.role=='professional':
+      if not user.service_professional.profile_verified:
+        return render_template('login.html', key=2)
       return redirect(f"user/prof/{user.user_id}")
     else:
       return redirect(f"user/customer/{user.user_id}")

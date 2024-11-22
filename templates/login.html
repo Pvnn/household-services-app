@@ -42,6 +42,11 @@
             Invalid login credentials! Try again
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
+        {% elif key==2 %}
+          <div class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
+            Your profile is under verification. Please try again later.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
         {% endif %}
       </div>
     </div>

@@ -229,3 +229,17 @@ def unblock_customer(customer_id):
   customer.user.is_blocked = False
   db.session.commit()
   return redirect('/admin/search')
+
+@app.route('/admin/service/delete/<int:service_id>')
+def delete_service(service_id):
+  s_requests = ServiceRequests.query.filter_by(service_id = service_id).all()
+  for s_request in s_requests:
+    ServiceRejections.query.filter_by(request_id = s_request.request_id).delete()
+  pros = ServiceProfessionals.query.filter_by(service_id = service_id).all()
+  for pro in pros:
+    pro.user.is_blocked = True
+    pro.profile_verified = False
+  ServiceRequests.query.filter_by(service_id = service_id).delete()
+  Services.query.filter_by(service_id = service_id).delete()
+  db.session.commit()
+  return redirect(request.referrer)

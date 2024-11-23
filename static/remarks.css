@@ -2,7 +2,7 @@
   margin: 0px;
 }
 #main, #canvas{
-  margin-top: 100px;
+  margin-top: 90px;
   border: 2px none black;
 }
 #canvas{
@@ -15,8 +15,7 @@
   width: 900px;
   margin: auto;
   height: max-content;
-  border: 1px solid grey;
-  margin-top: 150px;
+  margin-top: 90px;
   padding: 20px;
   border-radius: 5px;
 }

@@ -16,18 +16,16 @@
         <span style="font-size: 1.5rem;">Chorely</span>
       </a>
       <div style="display: flex;">
-        <a class="nav-link active" aria-current="page" href="#">Home</a> 
+        <a class="nav-link active" aria-current="page" href="/admin">Home</a> 
         <span class="header-span"></span>
-        | 
         <span class="header-span"></span>
-        <a class="nav-link" href="#">Search</a>
+        <a class="nav-link" href="/admin/search">Search</a>
         <span class="header-span"></span>
-        |
         <span class="header-span"></span>
-        <a class="nav-link" href="#">Summary</a>
+        <a class="nav-link" href="/admin/summary">Summary</a>
       </div>
       <div class="d-flex text text-end">
-        <a class="nav-link" href="/admin">Admin</a>
+        <a class="nav-link" href="/admin/profile">Admin</a>
         <span style="margin: 0px 25px 0px 0px;"></span>
         <a class="nav-link text-danger" href="/userlogin">Logout</a>
       </div>
@@ -37,7 +35,7 @@
     <div id="canvas">
       <div id="form-body">
         <div class="text-center mb-4">
-          <h4>Edit Service</h4>
+          <h2 class="headings">Edit Service</h2>
         </div>
           <form action="/admin/service/edit/{{ service.service_id }}" class="mt-3" method="post">
             <div class="row">

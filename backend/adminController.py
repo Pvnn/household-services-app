@@ -30,7 +30,13 @@ def create_service():
 @app.route('/admin/view/pro/<int:pro_id>', methods =['GET'])
 def view_pro(pro_id):
   pro = ServiceProfessionals.query.get(pro_id)
-  return render_template('admin-view-pro.html', pro = pro)
+  closed_services = ServiceRequests.query.filter_by(professional_id = pro.professional_id, service_status = 'closed').all()
+  ratings = [r.rating for r in closed_services]
+  if ratings:
+    avg_rating = sum(ratings)/len(ratings)
+  else:
+    avg_rating= "-"
+  return render_template('admin-view-pro.html', pro = pro, avg_rating = avg_rating)
 
 @app.route('/admin/service/edit/<int:service_id>', methods =['GET', 'POST'])
 def edit_service(service_id):

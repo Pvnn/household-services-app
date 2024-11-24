@@ -78,7 +78,7 @@ def close_service(user_id, request_id):
     service_request.date_of_completion = datetime.datetime.strptime(datetime.date.today().strftime("%Y-%m-%d"), "%Y-%m-%d").date()
     db.session.commit()
     return redirect(f"/user/customer/{user.user_id}")
-  return render_template('remarks.html', user = user, service_request = service_request)
+  return render_template('customer-remarks.html', user = user, service_request = service_request)
 
 @app.route('/user/<int:user_id>/service/cancel/<int:request_id>')
 def cancel_request(user_id,request_id):

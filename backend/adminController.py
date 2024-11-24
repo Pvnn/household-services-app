@@ -25,7 +25,7 @@ def create_service():
     return redirect('/admin')
   
   category_list = [category[0] for category in db.session.query(Services.category).distinct().all()]
-  return render_template('service-create.html', category_list = category_list)
+  return render_template('admin-service-create.html', category_list = category_list)
 
 @app.route('/admin/view/pro/<int:pro_id>', methods =['GET'])
 def view_pro(pro_id):
@@ -52,7 +52,7 @@ def edit_service(service_id):
     db.session.commit()
     return redirect(request.referrer)
 
-  return render_template('service-edit.html', service = service, category_list = category_list)
+  return render_template('admin-service-edit.html', service = service, category_list = category_list)
 
 @app.route('/admin/view/customer/<int:customer_id>', methods =['GET'])
 def view_customer(customer_id):
@@ -243,3 +243,15 @@ def delete_service(service_id):
   Services.query.filter_by(service_id = service_id).delete()
   db.session.commit()
   return redirect(request.referrer)
+
+@app.route('/admin/summary')
+def render_admin_summary():
+  ratings = [request.rating for request in ServiceRequests.query.filter_by(service_status='closed').all()]
+  labels1 = ['5 stars', '4 stars', '3 stars', '2 stars', '1 star']
+  data1=[ratings.count(5.0), ratings.count(4.0), ratings.count(3.0), ratings.count(2.0), ratings.count(1.0)]
+  labels2 = ['Requested', 'Accepted', 'Closed']
+  requested_services = ServiceRequests.query.filter_by(service_status = 'requested').all()
+  accepted_services = ServiceRequests.query.filter_by(service_status = 'accepted').all()
+  closed_services = ServiceRequests.query.filter_by(service_status = 'closed').all()
+  data2 = [len(requested_services), len(accepted_services), len(closed_services)]
+  return render_template('admin-summary.html', data1=data1, labels1=labels1, data2= data2, labels2 = labels2)

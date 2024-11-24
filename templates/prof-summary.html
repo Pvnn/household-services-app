@@ -65,6 +65,18 @@
     const config = {
       type: 'doughnut',
       data: data,
+      options: {
+        plugins:{
+          legend: {
+            position: 'bottom',
+          },
+          title: {
+            display: true,
+            text: 'Customer Ratings'
+          }
+        }
+        
+      },
     };
 
     const myChart = new Chart(

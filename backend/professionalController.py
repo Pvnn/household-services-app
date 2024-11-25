@@ -75,6 +75,7 @@ def prof_search(professional_id):
       for word in query_string.split():
         results=[]
         name_filter = ServiceRequests.query.join(Customers).filter(ServiceRequests.professional_id==pro.professional_id, Customers.name.ilike(f"%{word}%")).all()
+        status_filter =  ServiceRequests.query.filter(ServiceRequests.professional_id== pro.professional_id, ServiceRequests.service_status.ilike(f"%{word}%")).all()
         address_filter = ServiceRequests.query.join(Customers).filter(ServiceRequests.professional_id==pro.professional_id, Customers.address.ilike(f"%{word}%")).all()
         if word[0].isdigit():
           if "/" in word or "-" in word:
@@ -92,6 +93,8 @@ def prof_search(professional_id):
           results.extend(name_filter)
         if address_filter:
           results.extend(address_filter)
+        if status_filter:
+          results.extend(status_filter)
       return render_template('prof-search.html', pro=pro, results = results)
 
   return render_template('prof-search.html', pro=pro, results = results)

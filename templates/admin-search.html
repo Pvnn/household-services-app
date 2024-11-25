@@ -143,7 +143,7 @@
                     <tbody>
                       {% for service in results %}
                         <tr>
-                          <th scope="row">{{ loop.index }}</th>
+                          <th scope="row"> <a href="/admin/view/request/{{ service.request_id }}" class="text text-primary"> {{ loop.index }}</a></th>
                           <td>{{ service.customer.name }}</td>
                           <td>{{ service.customer.phone }}</td>
                           <td>{{ service.professional.name or 'To be assigned' }}</td>

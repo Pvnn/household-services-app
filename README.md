@@ -31,7 +31,7 @@ The app demonstrates skills in **backend development (Flask, SQLAlchemy)**, **fr
 - **Backend** – Flask controllers for each role, with centralized DB models  
 - **Database** – SQLite (tested with DBeaver)  
 
-* High-level flow:*  
+*High-level flow:*  
 1. Users sign up/login.  
 2. Customers create service requests.  
 3. Professionals accept/reject requests.  
@@ -40,21 +40,20 @@ The app demonstrates skills in **backend development (Flask, SQLAlchemy)**, **fr
 ---
 
 ## Database ER Diagram  
-👉 *(Upload your ER diagram image in repo and update path below)*  
-![ER Diagram](./assets/er-diagram.png)  
+![ER Diagram](./static/er_diagram.png)  
 
 ---
 
 ## 🖼️ Screenshots  
 
 - **Login Page**  
-  ![Login Screenshot](./assets/login.png)  
+  ![Login Screenshot](./static/login_page.png)  
 
 - **Customer Dashboard**  
-  ![Customer Dashboard](./assets/customer-dashboard.png)  
+  ![Customer Dashboard](./static/dashboard_page.png)  
 
 - **Admin Panel**  
-  ![Admin Panel](./assets/admin-panel.png)  
+  ![Admin Panel](./static/admin_page.png)  
 
 ---
 
